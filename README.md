@@ -1,36 +1,36 @@
-# React Native Expo Template with TanStack Query
+# Chat Module - React Native Expo App
 
-A clean React Native Expo starter template with TanStack Query, complete with ESLint, Prettier, Husky hooks, and lint-staged for code quality.
+A modern chat application built with React Native Expo, featuring real-time messaging, user avatars, and infinite scrolling with TanStack Query.
+
+![Chat Interface Screenshot](images/screen.png)
+
+![Chat Demo GIF](images/demo.gif)
 
 ## Features
 
-- ⚡ **React Native Expo** - Cross-platform mobile development
-- 🔄 **TanStack Query** - Powerful data fetching and caching
-- 📱 **Clean Template** - Minimal starter code ready for development
-- 🔧 **Development Tools** - All essential tools pre-configured
-- 🛠️ **ESLint & Prettier** - Code quality and formatting
-- 🪝 **Husky & lint-staged** - Pre-commit hooks for code quality
-- 📱 **TypeScript** - Type-safe development
-- 🎨 **Modern UI** - Clean and responsive design
+- 💬 **Real-time Chat Interface** - Modern messaging UI with user avatars
+- 🔄 **Infinite Scrolling** - Smooth pagination with TanStack Query
+- 👥 **User Management** - Multiple users with avatars and online status
+- 📱 **Responsive Design** - Optimized for mobile with Tamagui components
+- 🎨 **Modern UI** - Clean, intuitive chat interface
+- ⚡ **Performance** - Efficient data fetching and caching
+- 🔧 **TypeScript** - Type-safe development throughout
 
 ## Project Structure
 
 ```
-react-native-expo-template/
+chat-module/
 ├── src/
 │   ├── components/
-│   │   └── ExampleComponent.tsx      # Example component
+│   │   └── ChatMessage.tsx          # Individual chat message component
 │   ├── hooks/
-│   │   └── useExampleQuery.ts        # Example TanStack Query hook
+│   │   └── useChatMessages.ts       # Chat messages data fetching hook
 │   ├── providers/
-│   │   └── QueryProvider.tsx         # TanStack Query provider
+│   │   └── QueryProvider.tsx        # TanStack Query provider
 │   └── screens/
-│       └── HomeScreen.tsx            # Example screen
-├── .eslintrc.js
-├── .prettierrc.js
-├── .husky/
-│   └── pre-commit
-├── App.tsx
+│       └── HomeScreen.tsx           # Main chat screen
+├── images/                          # Project screenshots and demos
+├── App.tsx                          # Main app component
 └── package.json
 ```
 
@@ -78,14 +78,48 @@ react-native-expo-template/
    pnpm web
    ```
 
+## Key Components
+
+### ChatMessage Component
+
+The `ChatMessage` component renders individual chat messages with:
+
+- User avatars (with fallback to initials)
+- Message bubbles with proper alignment
+- User names and timestamps
+- Responsive text wrapping
+- Different styling for user vs other messages
+
+```typescript
+interface ChatMessageProps {
+  message: ChatMessageType;
+  isUser: boolean;
+}
+```
+
+### useChatMessages Hook
+
+Custom hook that provides infinite scrolling chat messages:
+
+- Paginated data fetching
+- Loading states
+- Error handling
+- Automatic caching with TanStack Query
+
+```typescript
+const { data, isLoading, error, fetchNextPage, hasNextPage } =
+  useChatMessages();
+```
+
+## Technology Stack
+
+- **React Native Expo** - Cross-platform mobile development
+- **TanStack Query** - Data fetching and caching
+- **Tamagui** - Modern UI component library
+- **TypeScript** - Type-safe development
+- **ESLint & Prettier** - Code quality and formatting
+
 ## Development Tools
-
-### Code Quality
-
-- **ESLint**: Code linting with TypeScript and React Native rules
-- **Prettier**: Code formatting
-- **Husky**: Git hooks for pre-commit validation
-- **lint-staged**: Run linters on staged files only
 
 ### Available Scripts
 
@@ -104,111 +138,64 @@ pnpm format:check   # Check code formatting
 pnpm type-check     # Run TypeScript type checking
 ```
 
-### Git Hooks
+## Data Structure
 
-The project uses Husky to run pre-commit hooks that:
-
-- Lint staged TypeScript/JavaScript files
-- Format staged files with Prettier
-- Ensure code quality before commits
-
-## TanStack Query Integration
-
-### QueryProvider Setup
-
-The app is wrapped with `QueryProvider` that configures TanStack Query with optimal settings:
+### Chat Message Interface
 
 ```typescript
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 10, // 10 minutes
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+interface ChatMessage {
+  id: string;
+  content: string;
+  timestamp: Date;
+  userId: string;
+  user: ChatUser;
+}
+
+interface ChatUser {
+  id: string;
+  name: string;
+  avatar?: string;
+}
 ```
 
-### Example Query Hook
+### Mock Data
 
-Simple example of using TanStack Query:
+The app includes mock data for demonstration:
 
-```typescript
-const { data, isLoading, error } = useExampleQuery();
-```
-
-### Usage Example
-
-```typescript
-// In your component
-const { data, isLoading, error } = useExampleQuery();
-
-// Handle loading state
-if (isLoading) return <LoadingSpinner />;
-
-// Handle error state
-if (error) return <ErrorMessage error={error} />;
-
-// Use data
-return <Text>{data}</Text>;
-```
-
-## Template Structure
-
-The template includes:
-
-- **ExampleComponent**: Basic component structure
-- **useExampleQuery**: TanStack Query hook example
-- **HomeScreen**: Screen with query demonstration
-- **QueryProvider**: TanStack Query setup
-
-### Components
-
-### ExampleComponent
-
-A simple component that demonstrates:
-
-- TypeScript interfaces
-- Props handling
-- StyleSheet usage
-- Component structure
-
-### HomeScreen
-
-An example screen that shows:
-
-- TanStack Query integration
-- Loading states
-- Error handling
-- Component composition
+- 4 different users with avatars
+- 1000+ generated messages
+- Realistic timestamps and content
+- Infinite scrolling simulation
 
 ## Customization
 
-### Styling
+### Adding Real API Integration
 
-The project uses StyleSheet for styling. You can customize:
+1. Replace mock data in `useChatMessages.ts`
+2. Update the `fetchChatMessages` function
+3. Add real authentication
+4. Implement WebSocket for real-time updates
 
-- Colors in component styles
-- Typography in theme files
-- Layout and spacing
+### Styling Customization
 
-### API Integration
+- Modify Tamagui theme in `tamagui.config.ts`
+- Update component styles in individual files
+- Customize colors, spacing, and typography
 
-Replace the example query with real API calls:
+### Adding Features
 
-1. Update `src/hooks/useExampleQuery.ts`
-2. Replace the mock function with real API calls
-3. Update TypeScript interfaces
-4. Test with real data
+- **Real-time messaging**: Integrate WebSocket
+- **File attachments**: Add image/file upload
+- **User presence**: Show online/offline status
+- **Message reactions**: Add emoji reactions
+- **Voice messages**: Implement audio recording
 
-### Adding New Features
+## Performance Optimizations
 
-1. **New Screens**: Add to `src/screens/`
-2. **New Components**: Add to `src/components/`
-3. **New Hooks**: Add to `src/hooks/`
-4. **New Services**: Add to `src/services/` (create this directory)
+- **Infinite scrolling**: Efficient pagination
+- **Image optimization**: Proper avatar loading
+- **Memoization**: React.memo for expensive components
+- **Query caching**: TanStack Query for data management
 
 ## Troubleshooting
 
@@ -217,13 +204,13 @@ Replace the example query with real API calls:
 1. **Metro bundler issues**: Clear cache with `pnpm start --clear`
 2. **TypeScript errors**: Run `pnpm type-check` to identify issues
 3. **Linting errors**: Run `pnpm lint:fix` to auto-fix issues
-4. **Formatting issues**: Run `pnpm format` to format code
+4. **Image loading**: Check avatar URLs and network connectivity
 
 ### Performance Tips
 
-- Use `React.memo` for expensive components
-- Implement proper key props for lists
-- Optimize images and assets
+- Use `React.memo` for message components
+- Implement proper key props for message lists
+- Optimize image sizes and formats
 - Use React Query's caching effectively
 
 ## Contributing

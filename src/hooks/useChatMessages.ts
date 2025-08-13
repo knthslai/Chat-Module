@@ -76,7 +76,6 @@ const generateMockMessagePool = (
       timestamp,
       userId: user.id,
       user,
-      messageType: 'text',
     });
   }
 

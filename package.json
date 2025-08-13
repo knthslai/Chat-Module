@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "@tamagui/animations-react-native": "^1.132.18",
+    "@tamagui/config": "^1.132.18",
+    "@tamagui/core": "^1.132.18",
+    "@tamagui/helpers-tamagui": "^1.132.18",
+    "@tamagui/image": "^1.132.18",
+    "@tamagui/react-native-media-driver": "^1.132.18",
+    "@tamagui/shorthands": "^1.132.18",
+    "@tamagui/themes": "^1.132.18",
     "@tanstack/react-query": "^5.85.0",
     "@tanstack/react-query-devtools": "^5.85.0",
     "expo": "^53.0.4",
